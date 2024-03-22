@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Pizza.Pizza">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <CollectionView x:Name="myListView" BackgroundColor="LightYellow" Grid.Row="0">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid  Margin="5" Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="150" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Image Source="{Binding Img}" HeightRequest="100" WidthRequest="100"   Aspect="AspectFit" BackgroundColor="Transparent"/>
+                            <Label x:Name="name" Grid.Row="1" TextColor="Black" Text="{Binding Название}" FontSize="19" FontAttributes="Bold" />
+                            <Label x:Name="price" Grid.Row="2"  Text="{Binding FormatedPrice}" FontSize="17" TextColor="Black" FontAttributes="Bold" />
+                            <Button Grid.Row="3" Text="Заказать" IsVisible="{Binding IsButtonVisible}" CommandParameter="{Binding .}" Clicked="send_Clicked" HorizontalOptions="Start" VerticalOptions="End" TextColor="Black" BackgroundColor="Orange" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+           
+            <Grid Grid.Row="1" Padding="10" ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ImageButton Source="icon1.png" Aspect="AspectFit" Clicked="Button1_Clicked" HeightRequest="50" WidthRequest="50" BackgroundColor="Orange" />
+                <ImageButton Source="icon2.png" Grid.Column="1" Clicked="Button2_Clicked" HeightRequest="50" WidthRequest="50" BackgroundColor="Orange" />
+                <ImageButton Source="icon3.png" Grid.Column="2" Clicked="Button3_Clicked" HeightRequest="50" WidthRequest="50" BackgroundColor="Orange" />
+                <ImageButton Source="icon4.png" Grid.Column="3" Clicked="OrderButton_Clicked" HeightRequest="50" WidthRequest="50" BackgroundColor="Orange"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

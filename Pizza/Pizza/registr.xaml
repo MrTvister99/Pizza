@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Pizza.registr">
+    <ContentPage.Content>
+        <Grid>
+            <Image Source="fons.jpg" Aspect="AspectFill" />
+            <RelativeLayout>
+                <Frame
+ BackgroundColor="White" 
+    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.8}"
+    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5}"
+    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
+    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.25}">
+                    <StackLayout 
+                     VerticalOptions="CenterAndExpand" 
+                     HorizontalOptions="CenterAndExpand"
+                     >
+                        <Entry 
+                 x:Name="loginEntry"
+                 
+                 WidthRequest="200"  
+                 Placeholder="Введите почту"
+                 PlaceholderColor="Orange"
+                 HorizontalOptions="Center" 
+                 VerticalOptions="Center"
+                 VerticalTextAlignment="Center"
+                 HorizontalTextAlignment="Center" />
+                        <Entry 
+                 x:Name="passwordEntry"
+                 IsPassword="True"
+                 WidthRequest="200"  
+                 Placeholder="Введите пароль"
+                 PlaceholderColor="Orange"
+                 HorizontalOptions="Center" 
+                 VerticalOptions="Center"
+                 VerticalTextAlignment="Center"
+                 HorizontalTextAlignment="Center" />
+
+
+                        <Entry 
+                 x:Name="EnterpasswordEntry"
+                 IsPassword="True"
+                 WidthRequest="200"  
+                 Placeholder="Подтвердите  пароль"
+                 PlaceholderColor="Orange"
+                 HorizontalOptions="Center" 
+                 VerticalOptions="Center"
+                 VerticalTextAlignment="Center"
+                 HorizontalTextAlignment="Center" />
+                        <Button
+             x:Name="ButtenAccount_registration"   
+             HorizontalOptions="Center"
+             VerticalOptions="Center"
+             Text="Регистрация"
+             TextColor="Orange"
+             BackgroundColor="Transparent" 
+             Clicked="ButtenAccount_registration_Clicked" />
+
+                        <Button 
+             x:Name="ButtonRefund"
+             Margin="-15"
+             HorizontalOptions="Center"
+             VerticalOptions="Center"
+             Text="Войти"
+             TextColor="Orange"
+             BackgroundColor="Transparent"
+             Clicked="ButtonRefund_Click" />
+                    </StackLayout>
+                </Frame>
+            </RelativeLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
