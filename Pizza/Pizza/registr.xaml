@@ -7,7 +7,7 @@
             <Image Source="fons.jpg" Aspect="AspectFill" />
             <RelativeLayout>
                 <Frame
- BackgroundColor="White" 
+ BackgroundColor="LightGoldenrodYellow" 
     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.8}"
     RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5}"
     RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
@@ -25,7 +25,9 @@
                  HorizontalOptions="Center" 
                  VerticalOptions="Center"
                  VerticalTextAlignment="Center"
-                 HorizontalTextAlignment="Center" />
+                 HorizontalTextAlignment="Center"
+                            TextColor="Black"/>
+                 
                         <Entry 
                  x:Name="passwordEntry"
                  IsPassword="True"
@@ -35,7 +37,8 @@
                  HorizontalOptions="Center" 
                  VerticalOptions="Center"
                  VerticalTextAlignment="Center"
-                 HorizontalTextAlignment="Center" />
+                 HorizontalTextAlignment="Center"
+                            TextColor="Black"/>
 
 
                         <Entry 
@@ -47,7 +50,8 @@
                  HorizontalOptions="Center" 
                  VerticalOptions="Center"
                  VerticalTextAlignment="Center"
-                 HorizontalTextAlignment="Center" />
+                 HorizontalTextAlignment="Center" 
+                            TextColor="Black"/>
                         <Button
              x:Name="ButtenAccount_registration"   
              HorizontalOptions="Center"
