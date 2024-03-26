@@ -27,6 +27,7 @@
                             <Label x:Name="name" Grid.Row="1" TextColor="Black" Text="{Binding Название}" FontSize="19" FontAttributes="Bold" />
                             <Label x:Name="price" Grid.Row="2"  Text="{Binding FormatedPrice}" FontSize="17" TextColor="Black" FontAttributes="Bold" />
                             <Button Grid.Row="3" Text="Заказать" IsVisible="{Binding IsButtonVisible}" CommandParameter="{Binding .}" Clicked="send_Clicked" HorizontalOptions="Start" VerticalOptions="End" TextColor="Black" BackgroundColor="Orange" />
+                            <Button Grid.Row="3" Text="Отменить" IsVisible="{Binding IsButtonVisible1}" Clicked="Delete_Clicked" HorizontalOptions="Start" VerticalOptions="End" TextColor="Black" BackgroundColor="Red" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

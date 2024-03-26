@@ -10,12 +10,14 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
 using static Google.Rpc.Help.Types;
+using Xamarin.Essentials;
 
 namespace Pizza
 {
     
     public partial class Pizza : ContentPage
     {
+        List<Pizzas> tovar_list;
         private string Products;
         private string mail;
     
@@ -30,10 +32,7 @@ namespace Pizza
 
         }
 
-        private void Order(object sender, EventArgs e)
-        {
-            // Navigation.PushModalAsync(new order_page());
-        }
+      
         public async Task LoadDataIntoListView()
         {
             if (entrance.email != null)
@@ -53,12 +52,21 @@ namespace Pizza
             var firebaseClient = new FirebaseClient("https://projectsd-4fe85-default-rtdb.firebaseio.com");
             var prod = firebaseClient.Child(Products); 
             var tovars = await prod.OnceAsync<Pizzas>();
-            var tovar_list = new List<Pizzas>();
+            tovar_list = new List<Pizzas>();
             tovar_list.Clear();
             
-            foreach (var auto in tovars)
+            foreach (var product in tovars)
             {
-                tovar_list.Add(auto.Object);
+                if (Products == "Basket")
+                {
+                    product.Object.IsButtonVisible1 = true;
+                }
+                else
+                {
+                    product.Object.IsButtonVisible1 = false;
+                }
+
+                tovar_list.Add(product.Object);
             }
             myListView.ItemsSource = tovar_list;
         }
@@ -69,7 +77,7 @@ namespace Pizza
                 .Child("Basket")
                 .OnceAsync<Pizzas>();
 
-            var tovar_list = new List<Pizzas>();
+            tovar_list = new List<Pizzas>();
 
             foreach (var basket in baskets)
             {
@@ -80,8 +88,18 @@ namespace Pizza
 
                 foreach (var product in products)
                 {
+                    if (Products == "Basket")
+                    {
+                        product.Object.IsButtonVisible1 = true;
+                    }
+                    else
+                    {
+                        product.Object.IsButtonVisible1 = false;
+                    }
+
                     if (basket.Key == mail)
                     {
+                      
                         product.Object.IsButtonVisible = false;
                         tovar_list.Add(product.Object);
 
@@ -103,8 +121,10 @@ namespace Pizza
             public string FormatedPrice => $"Цена: {Цена} руб";
 
             public bool IsButtonVisible { get; set; }
+            public bool IsButtonVisible1 { get; set; }
             public Pizzas() { 
                 IsButtonVisible = true;
+                IsButtonVisible1 = false;
             }
 
         }
@@ -171,5 +191,80 @@ namespace Pizza
             Products = "Sushi";
             LoadDataIntoListView();
         }
+
+        private async void Delete_Clicked(object sender, EventArgs e)
+        {
+            var Button = (Button)sender;
+            var item = (Pizzas)Button.BindingContext;
+            int Index = mail.IndexOf('@');
+            bool answer = await DisplayAlert("Подтверждение", "Вы уверены, что хотите отменить этот заказ?", "Да", "Нет");
+            if (mail.Contains("ru") && Index < mail.IndexOf("ru"))
+            {
+                mail = mail.Replace("ru", ".ru");
+            }
+            else if (mail.Contains("com") && Index < mail.IndexOf("com"))
+            {
+                mail = mail.Replace("com", ".com");
+            }
+
+            var firebaseClient = new FirebaseClient("https://projectsd-4fe85-default-rtdb.firebaseio.com/");
+            var toDeleteItem = (from Basket in tovar_list
+                                where Basket.Название == item.Название && Basket.Цена == item.Цена
+                                select Basket).FirstOrDefault();
+
+            if (toDeleteItem != null)
+            {
+                int atIndex = mail.IndexOf('@');
+                if (mail.Contains("ru") && atIndex < mail.IndexOf("ru"))
+                {
+                    mail = mail.Replace(".ru", "ru");
+                }
+                else if (mail.Contains("com") && atIndex < mail.IndexOf("com"))
+                {
+                    mail = mail.Replace(".com", "com");
+                }
+                var Snapshot = await firebaseClient
+            .Child("Basket")
+            .Child(mail.Replace(".", ""))
+            .OnceAsync<Pizzas>();
+
+                foreach (var ProductSnapshot in Snapshot)
+                {
+                    var Tovar = ProductSnapshot.Object;
+                    if (Tovar.Название == item.Название && Tovar.Цена == item.Цена)
+                    {
+
+                        await firebaseClient
+                            .Child("Basket")
+                            .Child(mail.Replace(".", ""))
+                            .Child(ProductSnapshot.Key)
+                            .DeleteAsync();
+
+
+                        tovar_list.Remove(Tovar);
+
+
+                        myListView.ItemsSource = null;
+                        myListView.ItemsSource = tovar_list;
+
+
+                        break;
+                    }
+                }
+
+
+
+
+
+
+
+                tovar_list.Remove(toDeleteItem);
+
+
+                myListView.ItemsSource = null;
+                myListView.ItemsSource = tovar_list;
+            }
+        }
     }
     }
+    
